@@ -18,10 +18,15 @@ int main()
 	vec4 b(0.5f, 0.2f, 0.1f, 1.0f);
 	vec4 c = a * b;
 
+	mat4 position = mat4::translation(vec3(2, 3, 4));
+
+	position *= mat4::identity();
+
+	std::cout << c << std::endl;
+
 	while (!window.closed())
 	{
 		window.clear();
-		std::cout << c << std::endl;
 #if 1
 		glBegin(GL_QUADS);
 		glVertex2f(-0.5f, -0.5f);
