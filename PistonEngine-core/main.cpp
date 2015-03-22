@@ -44,7 +44,7 @@ int main()
 	while (!window.closed())
 	{
 		vec2 mousepos = window.getMousePosition();
-		shader.setUniform2f("light_pos", vec2(mousepos.x * 16.0f / window.getWidth(), 9.0f - mousepos.y * 9.0f / window.getHeight()));
+		shader.setUniform2f("light_pos", vec2(mousepos.x * 16.0f / window.getSize().x, 9.0f - mousepos.y * 9.0f / window.getSize().y));
 		window.clear();
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		window.update();

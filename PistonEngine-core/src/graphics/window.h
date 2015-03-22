@@ -31,13 +31,14 @@ namespace PistonEngine { namespace graphics {
 		void update();
 		bool closed() const;
 
-		inline int getWidth() const { return m_Width; };
-		inline int getHeight() const { return m_Height; };
+		//inline int getWidth() const { return m_Width; };
+		//inline int getHeight() const { return m_Height; };
+		inline maths::vec2 getSize() const { return maths::vec2(m_Width, m_Height); }
 
 		bool isKeyPressed(unsigned int key) const;
 		bool isMouseButtonPressed(unsigned int button) const;
 		maths::vec2 getMousePosition() const;
-
+		
 	private:
 		bool init();
 		
