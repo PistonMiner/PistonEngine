@@ -1,6 +1,5 @@
 #pragma once
 
-#define _USE_MATH_DEFINES
 #include "maths.h"
 
 namespace PistonEngine { namespace maths {
@@ -12,7 +11,7 @@ namespace PistonEngine { namespace maths {
 		union
 		{
 			float elements[4 * 4];
-			vec4 columns[4];
+			vec4 columns[4]; //actually works despite IntelliSense telling me it doesnt
 		};
 
 

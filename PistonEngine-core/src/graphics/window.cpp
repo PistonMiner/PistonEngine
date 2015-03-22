@@ -78,10 +78,9 @@ namespace PistonEngine { namespace graphics {
 		return m_MouseButtons[button];
 	}
 
-	void Window::getMousePosition(double& x, double& y) const
+	maths::vec2 Window::getMousePosition() const
 	{
-		x = mx;
-		y = my;
+		return maths::vec2(mx, my);
 	}
 
 	void Window::clear() const
@@ -104,8 +103,8 @@ namespace PistonEngine { namespace graphics {
 	{
 		Window* win = (Window*)glfwGetWindowUserPointer(window);
 		glViewport(0, 0, width, height);
-		win->mx = width;
-		win->my = height;
+		win->m_Width = width;
+		win->m_Height = height;
 	}
 
 

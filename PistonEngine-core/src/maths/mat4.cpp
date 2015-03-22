@@ -59,9 +59,9 @@ namespace PistonEngine { namespace maths {
 		result.elements[1 + 1 * 4] = 2.0f / (top - bottom);
 		result.elements[2 + 2 * 4] = 2.0f / (far - near); //needs to be -2.0f?
 
-		result.elements[0 + 3 * 4] = ((right + left) / (right - left)); //needs to be -()?
-		result.elements[1 + 3 * 4] = ((top + bottom) / (top - bottom)); //needs to be -()?
-		result.elements[2 + 3 * 4] = ((far + near) / (near - far)); //needs to be -()?
+		result.elements[0 + 3 * 4] = -((right + left) / (right - left)); //needs to be -()?
+		result.elements[1 + 3 * 4] = -((top + bottom) / (top - bottom)); //needs to be -()?
+		result.elements[2 + 3 * 4] = -((far + near) / (near - far)); //needs to be -()?
 
 		return result;
 	}

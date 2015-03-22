@@ -4,6 +4,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include "../maths/maths.h"
+
 #define MAX_KEYS 1024
 #define MAX_MOUSE_BUTTONS 32
 
@@ -34,7 +36,7 @@ namespace PistonEngine { namespace graphics {
 
 		bool isKeyPressed(unsigned int key) const;
 		bool isMouseButtonPressed(unsigned int button) const;
-		void getMousePosition(double& x, double& y) const;
+		maths::vec2 getMousePosition() const;
 
 	private:
 		bool init();
