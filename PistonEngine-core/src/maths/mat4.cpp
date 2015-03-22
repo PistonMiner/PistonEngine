@@ -1,5 +1,4 @@
 #include "mat4.h"
-#include <math.h>
 
 namespace PistonEngine { namespace maths {
 
@@ -23,6 +22,7 @@ namespace PistonEngine { namespace maths {
 	{
 		return mat4(1.0f);
 	}
+
 
 	mat4& mat4::multiply(const mat4& other)
 	{
