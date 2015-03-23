@@ -25,7 +25,7 @@ namespace PistonEngine { namespace graphics {
 		bool m_MouseButtons[MAX_MOUSE_BUTTONS];
 		double mx, my;
 	public:
-		Window(const char *name, int width, int height);
+		Window(const char *title, int width, int height);
 		~Window();
 		void clear() const;
 		void update();

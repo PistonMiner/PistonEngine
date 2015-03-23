@@ -4,9 +4,9 @@ namespace PistonEngine { namespace graphics {
 
 	void window_size_callback(GLFWwindow *window, int width, int height);
 	
-	Window::Window(const char *name, int width, int height)
+	Window::Window(const char *title, int width, int height)
 	{
-		m_Title = name;
+		m_Title = title;
 		m_Width = width;
 		m_Height = height;
 

@@ -4,16 +4,13 @@
 
 namespace PistonEngine { namespace maths {
 
-	float toRadians(const float& degrees);
-
 	struct mat4
 	{
 		union
 		{
 			float elements[4 * 4];
-			vec4 columns[4]; //actually works despite IntelliSense telling me it doesnt
+			vec4 columns[4]; // ignore IntelliSense, this works
 		};
-
 
 		mat4();
 		mat4(float diagonal);
