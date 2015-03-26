@@ -1,9 +1,9 @@
 #include "src/graphics/window.h"
 #include "src/graphics/shader.h"
-#include "src/maths/maths.h"
 #include "src/graphics/buffers/indexbuffer.h"
 #include "src/graphics/buffers/vertexbuffer.h"
 #include "src/graphics/buffers/vertexarray.h"
+#include "src/maths/maths.h"
 
 int main()
 {
