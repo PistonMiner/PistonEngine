@@ -13,7 +13,7 @@ namespace PistonEngine { namespace graphics {
 			delete m_Buffers[i];
 	}
 
-	void VertexArray::addBuffer(VertexBuffer* buffer, GLuint index)
+	void VertexArray::addBuffer(Buffer* buffer, GLuint index)
 	{
 		bind();
 		buffer->bind();
@@ -24,7 +24,7 @@ namespace PistonEngine { namespace graphics {
 		buffer->unbind();
 		unbind();
 
-		m_Buffers.push_back(buffer);
+		//m_Buffers.push_back(buffer);
 	}
 
 	void VertexArray::bind() const

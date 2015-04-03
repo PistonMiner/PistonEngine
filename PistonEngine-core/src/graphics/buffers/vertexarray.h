@@ -1,9 +1,9 @@
 #pragma once
 
-#include <GL/glew.h>
 #include <vector>
+#include <GL/glew.h>
 
-#include "vertexbuffer.h"
+#include "buffer.h"
 
 namespace PistonEngine { namespace graphics {
 
@@ -11,12 +11,12 @@ namespace PistonEngine { namespace graphics {
 	{
 	private:
 		GLuint m_ArrayID;
-		std::vector<VertexBuffer*> m_Buffers;
+		std::vector<Buffer*> m_Buffers;
 	public:
 		VertexArray();
 		~VertexArray();
 
-		void addBuffer(VertexBuffer* buffer, GLuint index);
+		void addBuffer(Buffer* buffer, GLuint index);
 		void bind() const;
 		void unbind() const;
 	};
