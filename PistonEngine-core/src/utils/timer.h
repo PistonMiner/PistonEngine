@@ -3,7 +3,7 @@
 #include <Windows.h>
 
 namespace PistonEngine {
-	
+
 	class Timer
 	{
 	private:
@@ -32,6 +32,5 @@ namespace PistonEngine {
 		}
 				
 	};
-	
-		
+
 }
