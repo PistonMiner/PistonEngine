@@ -24,7 +24,7 @@ int main()
 	using namespace PistonEngine;
 	using namespace graphics;
 	using namespace maths;
-	Window window("Sparky!", 960, 540);
+	Window window("PistonEngine", 960, 540);
 	// glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	mat4 ortho = mat4::orthographic(0.0f, 16.0f, 0.0f, 9.0f, -1.0f, 1.0f);
 	
