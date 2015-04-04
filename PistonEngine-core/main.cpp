@@ -12,9 +12,8 @@
 
 #include "src/graphics/static_sprite.h"
 #include "src/graphics/sprite.h"
-#include "src/utils/timer.h"
 
-#include "src/graphics/layers/tilelayer.h"
+#include <time.h>
 
 #define BATCH_RENDERER 1
 
@@ -59,20 +58,12 @@ int main()
 	StaticSprite sprite2(7, 1, 2, 3, maths::vec4(0.2f, 0, 1, 1), shader);
 	Simple2DRenderer renderer;
 #endif
+	//BatchRenderer2D batch;
 
 	shader.setUniform4f("u_color", vec4(0.2f, 0.3f, 0.8f, 1.0f));
 
-	Timer time;
-	float timer = 0;
-	unsigned int frames = 0;
-
 	while (!window.closed())
 	{
-		mat4 mat = mat4::translation(vec3(5, 5, 5));
-		mat = mat * mat4::rotation(time.elapsed() * 50.0f, vec3(0, 0, 1));
-		mat = mat * mat4::translation(vec3(-5, -5, -5));
-		shader.setUniformMat4("ml_matrix", mat);
-
 		window.clear();
 		vec2 mousepos = window.getMousePosition();
 		shader.setUniform2f("u_light_pos", vec2(mousepos.x * 16.0f / window.getSize().x, 9.0f - mousepos.y * 9.0f / window.getSize().y));
@@ -87,14 +78,6 @@ int main()
 		renderer.end();
 #endif
 		renderer.flush();
-
-		frames++;
-		if (time.elapsed() - timer > 1.0f)
-		{
-			timer += 1.0f;
-			printf("%d fps\n", frames);
-			frames = 0;
-		}
 
 		window.update();
 	}

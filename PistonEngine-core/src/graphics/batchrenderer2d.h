@@ -1,6 +1,5 @@
 #pragma once
 
-#include <cstddef>
 #include "renderer2d.h"
 #include "buffers/indexbuffer.h"
 namespace PistonEngine { namespace graphics {
@@ -25,9 +24,9 @@ namespace PistonEngine { namespace graphics {
 	public:
 		BatchRenderer2D();
 		~BatchRenderer2D();
-		void begin() override;
+		void begin();
 		void submit(const Renderable2D* renderable) override;
-		void end() override;
+		void end();
 		void flush() override;
 	private:
 		void init();

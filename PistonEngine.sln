@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PistonEngine-core", "PistonEngine-core\PistonEngine-core.vcxproj", "{D817901E-67C9-4B56-9F66-ACF04B75E6DF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{932040E3-E629-45E9-9869-F559F899FB0F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EF32F066-7B71-416D-BF08-F050156318D8}"
 	ProjectSection(SolutionItems) = preProject
 		Performance1.psess = Performance1.psess
 	EndProjectSection
@@ -23,8 +23,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal
