@@ -25,16 +25,17 @@ namespace PistonEngine { namespace graphics {
 		glEnableVertexAttribArray(SHADER_VERTEX_INDEX);
 		glEnableVertexAttribArray(SHADER_COLOR_INDEX);
 		glVertexAttribPointer(SHADER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)0);
-		glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(3 * sizeof(GLfloat)));
+		//glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(3 * sizeof(GLfloat)));
+		glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, VertexData::color)));
 		
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-		GLushort indices[RENDERER_INDICES_SIZE];
+		GLuint* indices = new GLuint[RENDERER_INDICES_SIZE]; //ToDo: Change this back to GLushort!
 
 		int offset = 0;
 		for (int i = 0; i < RENDERER_INDICES_SIZE; i += 6)
 		{
-			indices[i] = offset + 0;
+			indices[i + 0] = offset + 0;
 			indices[i + 1] = offset + 1;
 			indices[i + 2] = offset + 2;
 
@@ -62,20 +63,27 @@ namespace PistonEngine { namespace graphics {
 		const maths::vec2& size = renderable->getSize();
 		const maths::vec4& color = renderable->getColor();
 
+		int r = color.x * 255.0f;
+		int g = color.y * 255.0f;
+		int b = color.z * 255.0f;
+		int a = color.w * 255.0f;
+		
+		unsigned int c = a << 24 | b << 16 | g << 8 | r;
+
 		m_Buffer->vertex = position;
-		m_Buffer->color = color;
+		m_Buffer->color = c; //m_Buffer->color = c;
 		m_Buffer++;
 
 		m_Buffer->vertex = maths::vec3(position.x, position.y + size.y, position.z);
-		m_Buffer->color = renderable->getColor();
+		m_Buffer->color = c; //m_Buffer->color = c;
 		m_Buffer++;
 
 		m_Buffer->vertex = maths::vec3(position.x + size.x, position.y + size.y, position.z);
-		m_Buffer->color = color;
+		m_Buffer->color = c; //m_Buffer->color = c;
 		m_Buffer++;
 
 		m_Buffer->vertex = maths::vec3(position.x + size.x, position.y, position.z);
-		m_Buffer->color = color;
+		m_Buffer->color = c; //m_Buffer->color = c;
 		m_Buffer++;
 
 		m_IndexCount += 6;
@@ -92,7 +100,7 @@ namespace PistonEngine { namespace graphics {
 		glBindVertexArray(m_VAO);
 		m_IBO->bind();
 
-		glDrawElements(GL_TRIANGLES, m_IndexCount, GL_UNSIGNED_SHORT, nullptr);
+		glDrawElements(GL_TRIANGLES, m_IndexCount, GL_UNSIGNED_INT, nullptr); // Changed to GL_UNSIGNED__INT
 
 		m_IBO->unbind();
 		glBindVertexArray(0);
