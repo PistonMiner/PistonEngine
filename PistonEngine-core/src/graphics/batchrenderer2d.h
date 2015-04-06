@@ -3,6 +3,9 @@
 #include <cstddef>
 #include "renderer2d.h"
 #include "buffers/indexbuffer.h"
+#include "renderable2d.h" // need to include this 
+						  // -> renderer2d.h:11
+
 namespace PistonEngine { namespace graphics {
 
 #define RENDERER_MAX_SPRITES	60000
