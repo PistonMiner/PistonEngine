@@ -22,10 +22,15 @@ namespace PistonEngine { namespace graphics {
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
 		glBufferData(GL_ARRAY_BUFFER, RENDERER_BUFFER_SIZE, NULL, GL_DYNAMIC_DRAW);
+		
 		glEnableVertexAttribArray(SHADER_VERTEX_INDEX);
+		glEnableVertexAttribArray(SHADER_UV_INDEX);
+		glEnableVertexAttribArray(SHADER_TID_INDEX);
 		glEnableVertexAttribArray(SHADER_COLOR_INDEX);
+
 		glVertexAttribPointer(SHADER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)0);
-		//glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(3 * sizeof(GLfloat)));
+		glVertexAttribPointer(SHADER_UV_INDEX, 2, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, VertexData::uv)));
+		glVertexAttribPointer(SHADER_TID_INDEX, 1, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, VertexData::tid)));
 		glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, VertexData::color)));
 		
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -62,27 +67,69 @@ namespace PistonEngine { namespace graphics {
 		const maths::vec3& position = renderable->getPosition();
 		const maths::vec2& size = renderable->getSize();
 		const maths::vec4& color = renderable->getColor();
+		const std::vector<maths::vec2>& uv = renderable->getUV();
+		const GLuint tid = renderable->getTID();
 
-		int r = color.x * 255.0f;
-		int g = color.y * 255.0f;
-		int b = color.z * 255.0f;
-		int a = color.w * 255.0f;
+		unsigned int c = 0;
+
+		float ts = 0.0f; //Texture Slot
+		if (tid > 0) // Do want to use textures?
+		{
+			bool found = false;
+			for (int i = 0; i < m_TextureSlots.size(); i++) // Look through all textures loaded
+			{
+				if (m_TextureSlots[i] == tid) // Do we want this one?
+				{
+					ts = (float)(i + 1); // We found our texture, now set our TS to this one
+					found = true;
+					break;
+				}
+			}
+
+			if (!found) // Did we find it?
+			{
+				if (m_TextureSlots.size() >= 32) // Did we reach our max limit of textures?
+				{
+					end(); // Then go ahead and flush everything so we can have new textures.
+					flush();
+					begin();
+				}
+				m_TextureSlots.push_back(tid); // Add our new texture to the end
+				ts = (float)(m_TextureSlots.size()); // And set our TS to the new one.
+			}
+		}
+		else // We dont want to use textures, so use the color.
+		{
+			int r = color.x * 255.0f;
+			int g = color.y * 255.0f;
+			int b = color.z * 255.0f;
+			int a = color.w * 255.0f;
+
+			c = a << 24 | b << 16 | g << 8 | r;
+		}
 		
-		unsigned int c = a << 24 | b << 16 | g << 8 | r;
 
 		m_Buffer->vertex = *m_TransformationBack * position;
+		m_Buffer->uv = uv[0];
+		m_Buffer->tid = ts;
 		m_Buffer->color = c;
 		m_Buffer++;
 
 		m_Buffer->vertex = *m_TransformationBack * maths::vec3(position.x, position.y + size.y, position.z);
+		m_Buffer->uv = uv[1];
+		m_Buffer->tid = ts;
 		m_Buffer->color = c;
 		m_Buffer++;
 
 		m_Buffer->vertex = *m_TransformationBack * maths::vec3(position.x + size.x, position.y + size.y, position.z);
+		m_Buffer->uv = uv[2];
+		m_Buffer->tid = ts;
 		m_Buffer->color = c;
 		m_Buffer++;
 
 		m_Buffer->vertex = *m_TransformationBack * maths::vec3(position.x + size.x, position.y, position.z);
+		m_Buffer->uv = uv[3];
+		m_Buffer->tid = ts;
 		m_Buffer->color = c;
 		m_Buffer++;
 
@@ -97,6 +144,12 @@ namespace PistonEngine { namespace graphics {
 
 	void BatchRenderer2D::flush()
 	{
+		for (int i = 0; i < m_TextureSlots.size(); i++) // Activate all our textures
+		{
+			glActiveTexture(GL_TEXTURE0 + i);
+			glBindTexture(GL_TEXTURE_2D, m_TextureSlots[i]);
+		}
+
 		glBindVertexArray(m_VAO);
 		m_IBO->bind();
 
