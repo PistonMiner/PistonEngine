@@ -155,6 +155,8 @@ namespace PistonEngine { namespace graphics {
 
 		glDrawElements(GL_TRIANGLES, m_IndexCount, GL_UNSIGNED_INT, nullptr); // Changed to GL_UNSIGNED__INT
 
+		GLenum error = glGetError();
+
 		m_IBO->unbind();
 		glBindVertexArray(0);
 		m_IndexCount = 0;

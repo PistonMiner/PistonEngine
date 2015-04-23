@@ -12,6 +12,7 @@ namespace PistonEngine { namespace graphics {
 	public:
 		Group(const maths::mat4& transform)
 			: m_TransformationMatrix(transform) {}
+		~Group();
 
 		void add(Renderable2D* renderable);
 		void submit(Renderer2D* renderer) const override;
